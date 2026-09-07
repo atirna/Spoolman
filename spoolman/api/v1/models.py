@@ -1,5 +1,6 @@
 """Pydantic data models for typing the FastAPI request/responses."""
 
+import json
 from datetime import datetime, timezone
 from enum import Enum
 from typing import TYPE_CHECKING, Annotated, Literal
@@ -154,7 +155,7 @@ class Vendor(BaseModel):
         ),
         examples=["eSun"],
     )
-    extra: dict[str, str] = Field(
+    extra: dict[str, object] = Field(
         description=_extra_fields_description("vendor"),
     )
 
@@ -168,7 +169,7 @@ class Vendor(BaseModel):
             comment=item.comment,
             empty_spool_weight=item.empty_spool_weight,
             external_id=item.external_id,
-            extra={field.key: field.value for field in item.extra},
+            extra={field.key: json.loads(field.value) for field in item.extra},
         )
 
 
@@ -270,7 +271,7 @@ class Filament(BaseModel):
         ),
         examples=["polymaker_pla_polysonicblack_1000_175"],
     )
-    extra: dict[str, str] = Field(
+    extra: dict[str, object] = Field(
         description=_extra_fields_description("filament"),
     )
 
@@ -298,7 +299,7 @@ class Filament(BaseModel):
                 MultiColorDirection(item.multi_color_direction) if item.multi_color_direction is not None else None
             ),
             external_id=item.external_id,
-            extra={field.key: field.value for field in item.extra},
+            extra={field.key: json.loads(field.value) for field in item.extra},
         )
 
 
@@ -405,7 +406,7 @@ class Spool(BaseModel):
         examples=[""],
     )
     archived: bool = Field(description="Whether this spool is archived and should not be used anymore.")
-    extra: dict[str, str] = Field(
+    extra: dict[str, object] = Field(
         description=_extra_fields_description("spool"),
     )
     tags: list[SpoolTag] = Field(
@@ -462,7 +463,7 @@ class Spool(BaseModel):
             lot_nr=item.lot_nr,
             comment=item.comment,
             archived=item.archived if item.archived is not None else False,
-            extra={field.key: field.value for field in item.extra},
+            extra={field.key: json.loads(field.value) for field in item.extra},
             tags=[SpoolTag.from_db(tag) for tag in item.tags],
         )
 
