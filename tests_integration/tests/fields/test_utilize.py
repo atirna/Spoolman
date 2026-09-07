@@ -35,7 +35,7 @@ def test_add_vendor_with_extra_field():
     assert_httpx_success(result)
     vendor = result.json()
     assert vendor["name"] == "My Vendor"
-    assert vendor["extra"] == {"mytextfield": '"My Value"'}
+    assert vendor["extra"] == {"mytextfield": "My Value"}
 
     # Clean up
     result = httpx.delete(f"{URL}/api/v1/field/vendor/mytextfield")
@@ -90,7 +90,7 @@ def test_add_vendor_with_extra_field_then_delete():
     assert_httpx_success(result)
     vendor = result.json()
     assert vendor["name"] == "My Vendor"
-    assert vendor["extra"] == {"mytextfield": '"My Value"'}
+    assert vendor["extra"] == {"mytextfield": "My Value"}
 
     # Remove field
     result = httpx.delete(f"{URL}/api/v1/field/vendor/mytextfield")
@@ -143,7 +143,7 @@ def test_update_existing_vendor_with_new_extra_field():
     assert_httpx_success(result)
     vendor = result.json()
     assert vendor["name"] == "My Vendor"
-    assert vendor["extra"] == {"mytextfield": '"My Value"'}
+    assert vendor["extra"] == {"mytextfield": "My Value"}
 
     # Clean up
     result = httpx.delete(f"{URL}/api/v1/field/vendor/mytextfield")
