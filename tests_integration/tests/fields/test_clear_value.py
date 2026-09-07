@@ -130,7 +130,7 @@ async def test_clear_leaves_other_values_alone(entity_type: str, random_filament
             json={"extra": {cleared_key: None, kept_key: json.dumps("stays")}},
         )
         assert_httpx_success(result)
-        assert result.json()["extra"] == {kept_key: json.dumps("stays")}
+        assert result.json()["extra"] == {kept_key: "stays"}
     finally:
         for key in (cleared_key, kept_key):
             httpx.delete(f"{URL}/api/v1/field/{entity_type}/{key}").raise_for_status()

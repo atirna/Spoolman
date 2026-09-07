@@ -82,9 +82,9 @@ def test_rename_extra_field_value(shelf_spools: Fixture):
 
     for spool_id in shelf_spools.spools["Bottom"]:
         # The stored value is JSON-encoded, and readable back as the plain new value.
-        assert _spool(spool_id)["extra"][shelf_spools.field_key] == json.dumps("Lower")
+        assert _spool(spool_id)["extra"][shelf_spools.field_key] == "Lower"
     # The other group is untouched.
-    assert _spool(shelf_spools.spools["Top"][0])["extra"][shelf_spools.field_key] == json.dumps("Top")
+    assert _spool(shelf_spools.spools["Top"][0])["extra"][shelf_spools.field_key] == "Top"
 
 
 def test_renamed_extra_field_value_is_visible_to_grouping(shelf_spools: Fixture):
@@ -124,7 +124,7 @@ def test_rename_value_merges_into_existing(shelf_spools: Fixture):
     assert result.json() == {"spools_updated": 2}
 
     for spool_id in shelf_spools.all_ids:
-        assert _spool(spool_id)["extra"][shelf_spools.field_key] == json.dumps("Top")
+        assert _spool(spool_id)["extra"][shelf_spools.field_key] == "Top"
 
 
 def test_rename_absent_value_is_a_no_op(shelf_spools: Fixture):
