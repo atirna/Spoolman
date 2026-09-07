@@ -98,8 +98,8 @@ async def test_patch_merges_per_key(entity_type: str, random_filament: dict[str,
         )
         assert_httpx_success(result)
         assert result.json()["extra"] == {
-            patched_key: json.dumps("after"),
-            untouched_key: json.dumps("untouched"),
+            patched_key: "after",
+            untouched_key: "untouched",
         }
     finally:
         for key in (patched_key, untouched_key):
